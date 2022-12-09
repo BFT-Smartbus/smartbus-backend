@@ -1,30 +1,31 @@
 from flask import Flask, render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
+import json
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+with app.app_context():
+    db.create_all()
 
-
-class Todo(db.Model):
+class Users(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(100))
-  complete = db.Column(db.Boolean)
+  username = db.Column(db.String(100))
+  password = db.Column(db.String(100))
 
-@app.route("/")
-def home():
-    todo_list = Todo.query.all()
-    return render_template('base.html', todo_list=todo_list)
+# @app.route("/")
+# def home():
+#     todo_list = Todo.query.all()
+#     return render_template('base.html', todo_list=todo_list)
 
-@app.route('/add', methods=['POST'])
-def add():
-  name = request.form.get('name')
-  new_task = Todo(name=name, complete=False)
-  db.session.add(new_task)
-  db.session.commit()
-  return redirect(url_for('home'))
+@app.route('/driverLogin', methods=['POST'])
+def login():
+      data = json.loads(request.get_data())
+      if not data['username'] or not data['password']:
+        return "Please enter the required fields", 400
+      return data
 
 if __name__ == "__main__":
 
