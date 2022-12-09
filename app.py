@@ -25,7 +25,10 @@ def login():
       data = json.loads(request.get_data())
       if not data['username'] or not data['password']:
         return "Please enter the required fields", 400
+      driver_login = Users.query.filter_by(username=data['username']).first()
+      print(driver_login.username)
       return data
+
 
 if __name__ == "__main__":
 
