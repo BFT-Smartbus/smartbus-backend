@@ -33,13 +33,13 @@ def login():
       driver_login = Users.query.filter_by(username=data['username']).first()
       print(driver_login.username)
       hashed_password = driver_login.password
-      if not bcrypt.check_password_hash(hashed_password, data['password']):
-        return "password you enter is not correct", 400
-      else:
-        encoded_jwt = jwt.encode({'username': data['username']}, "secret", algorithm="HS256")
-        print(encoded_jwt)
-
-      return data
+      # if not bcrypt.check_password_hash(hashed_password, data['password']):
+      #   return "password you enter is not correct", 400
+      # else:
+      encoded_jwt = jwt.encode({'username': data['username']}, SECRET_KEY, algorithm="HS256")
+        # print(encoded_jwt)
+      return encoded_jwt
+      # return data
 
 
 if __name__ == "__main__":
