@@ -2,10 +2,13 @@ from flask import Flask, render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 import json
+import jwt
+
 
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
+SECRET_KEY = 'DSDYWIDNFDE'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -32,6 +35,10 @@ def login():
       hashed_password = driver_login.password
       if not bcrypt.check_password_hash(hashed_password, data['password']):
         return "password you enter is not correct", 400
+      else:
+        encoded_jwt = jwt.encode({'username': data['username']}, "secret", algorithm="HS256")
+        print(encoded_jwt)
+
       return data
 
 
