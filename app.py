@@ -1,9 +1,11 @@
 from flask import Flask, render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 import json
 
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -27,6 +29,9 @@ def login():
         return "Please enter the required fields", 400
       driver_login = Users.query.filter_by(username=data['username']).first()
       print(driver_login.username)
+      hashed_password = driver_login.password
+      if not bcrypt.check_password_hash(hashed_password, data['password']):
+        return "password you enter is not correct", 400
       return data
 
 
