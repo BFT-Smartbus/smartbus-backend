@@ -44,7 +44,7 @@ def driverlogin():
         # print(encoded_jwt)
       return encoded_jwt
       # return data
-@app.route('riderLogin',methods=['POST'])
+@app.route('/riderLogin',methods=['POST'])
 def riderLogin():
   data = json.loads(request.get_data())
   if not data['username'] or not data['password']:
