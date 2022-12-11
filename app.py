@@ -50,6 +50,7 @@ def riderLogin():
   data = json.loads(request.get_data())
   if not data['username'] or not data['password']:
     return "Please enter the required fields", 400
+  rider_login = Riders.query.filter_by(username=data['username']).first()
 
 
 
