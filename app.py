@@ -26,7 +26,7 @@ class Users(db.Model):
 #     return render_template('base.html', todo_list=todo_list)
 
 @app.route('/driverLogin', methods=['POST'])
-def login():
+def driverlogin():
       data = json.loads(request.get_data())
       if not data['username'] or not data['password']:
         return "Please enter the required fields", 400
@@ -41,6 +41,7 @@ def login():
       return encoded_jwt
       # return data
 @app.route('riderLogin',methods=['POST'])
+def
 
 
 if __name__ == "__main__":
