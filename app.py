@@ -20,6 +20,11 @@ class Users(db.Model):
   username = db.Column(db.String(100))
   password = db.Column(db.String(100))
 
+class Riders(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  username = db.Column(db.String(100))
+  password = db.Column(db.String(100))
+
 # @app.route("/")
 # def home():
 #     todo_list = Todo.query.all()
