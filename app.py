@@ -40,6 +40,7 @@ def login():
         # print(encoded_jwt)
       return encoded_jwt
       # return data
+@app.route('riderLogin',methods=['POST'])
 
 
 if __name__ == "__main__":
