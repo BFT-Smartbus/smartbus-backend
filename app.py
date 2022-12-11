@@ -41,7 +41,11 @@ def driverlogin():
       return encoded_jwt
       # return data
 @app.route('riderLogin',methods=['POST'])
-def
+def riderLogin():
+  data = json.loads(request.get_data())
+  if not data['username'] or not data['password']:
+    return "Please enter the required fields", 400
+
 
 
 if __name__ == "__main__":
