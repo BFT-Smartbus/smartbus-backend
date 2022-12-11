@@ -36,7 +36,6 @@ def driverlogin():
       if not data['username'] or not data['password']:
         return "Please enter the required fields", 400
       driver_login = Users.query.filter_by(username=data['username']).first()
-      print(driver_login.username)
       hashed_password = driver_login.password
       # if not bcrypt.check_password_hash(hashed_password, data['password']):
       #   return "password you enter is not correct", 400
@@ -51,6 +50,7 @@ def riderLogin():
   if not data['username'] or not data['password']:
     return "Please enter the required fields", 400
   rider_login = Riders.query.filter_by(username=data['username']).first()
+
 
 
 
