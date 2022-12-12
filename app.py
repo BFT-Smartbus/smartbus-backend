@@ -1,60 +1,21 @@
-from flask import Flask, render_template,request,redirect,url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
-import json
-import jwt
-
+import config
+from flask import Flask
+from config import db
+from handler.rider_login import rider_login
+from handler.driver_login import driver_login
 
 
 app = Flask(__name__)
-bcrypt = Bcrypt(app)
-SECRET_KEY = 'DSDYWIDNFDE'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+# make app available to fll files within entire folder
+app.config.from_object(config)
+db.init_app(app)
+
+# refactoring
+app.register_blueprint(rider_login)
+app.register_blueprint(driver_login)
+
 with app.app_context():
     db.create_all()
-
-class Users(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(100))
-  password = db.Column(db.String(100))
-
-class Riders(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(100))
-  password = db.Column(db.String(100))
-
-# @app.route("/")
-# def home():
-#     todo_list = Todo.query.all()
-#     return render_template('base.html', todo_list=todo_list)
-
-@app.route('/driverLogin', methods=['POST'])
-def driverlogin():
-      data = json.loads(request.get_data())
-      if not data['username'] or not data['password']:
-        return "Please enter the required fields", 400
-      driver_login = Users.query.filter_by(username=data['username']).first()
-      hashed_password = driver_login.password
-      # if not bcrypt.check_password_hash(hashed_password, data['password']):
-      #   return "password you enter is not correct", 400
-      # else:
-      encoded_jwt = jwt.encode({'username': data['username']}, SECRET_KEY, algorithm="HS256")
-        # print(encoded_jwt)
-      return encoded_jwt
-      # return data
-@app.route('/riderLogin',methods=['POST'])
-def riderLogin():
-  data = json.loads(request.get_data())
-  if not data['username'] or not data['password']:
-    return "Please enter the required fields", 400
-  rider_login = Riders.query.filter_by(username=data['username']).first()
-  print(rider_login)
-  hashed_password = rider_login.password
-  encoded_jwt= jwt.encode({'username':data['username']},SECRET_KEY, algorithm="HS256" )
-  return encoded_jwt
-
 
 
 if __name__ == "__main__":
