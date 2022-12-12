@@ -18,9 +18,11 @@ def driveroutes():
     driver_entered_data = jwt.decode(auth_token, SECRET_KEY, algorithms="HS256")
     current_logged_in_user = Users.query.filter_by(username=driver_entered_data['username']).first()
 
-    print(current_logged_in_user)
+    print(current_logged_in_user.username)
 
-    return jsonify(current_logged_in_user)
+    return "some route info", 200
+
+    # return jsonify(current_logged_in_user)
 
   except:
     return "Token is invalid", 401
