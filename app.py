@@ -4,6 +4,8 @@ from config import db
 from handler.rider_login import rider_login
 from handler.driver_login import driver_login
 from handler.driver_get_route import driver_route
+from handler.heartbeat_post import heartbeat_post
+from modals.Heartbeat import Heartbeat
 
 
 app = Flask(__name__)
@@ -15,6 +17,7 @@ db.init_app(app)
 app.register_blueprint(rider_login)
 app.register_blueprint(driver_login)
 app.register_blueprint(driver_route)
+app.register_blueprint(heartbeat_post)
 
 with app.app_context():
     db.create_all()
