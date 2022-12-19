@@ -7,11 +7,11 @@ from handler.driver_get_route import driver_route
 
 
 app = Flask(__name__)
-# make app available to fll files within entire folder
+# make app available to all files within entire folder
 app.config.from_object(config)
 db.init_app(app)
 
-# refactoring
+# refactoring endpoint
 app.register_blueprint(rider_login)
 app.register_blueprint(driver_login)
 app.register_blueprint(driver_route)
@@ -22,4 +22,4 @@ with app.app_context():
 
 if __name__ == "__main__":
 
-  app.run(debug=True)
+    app.run(debug=True)
