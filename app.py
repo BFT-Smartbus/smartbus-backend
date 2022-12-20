@@ -7,6 +7,7 @@ from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
 
 # os, dotenv, and load_dotenv() are what we need to use .env to hide confidential code
+
 load_dotenv()
 USERNAME = os.getenv("USERNAME")
 PASSWORD = os.getenv("PASSWORD")
@@ -38,15 +39,13 @@ with app.app_context():
     db.create_all()
 
 
-@app.route("/driverLogin", methods=["POST"])
+@app.route("/driver-login", methods=["POST"])
 def driverlogin():
     data = json.loads(request.get_data())
     if not data["username"] or not data["password"]:
         return "Please enter the required fields", 400
-
     driver_login = Drivers.query.filter_by(username=data["username"]).first()
-    hashed_password = driver_login.password
-
+    # hashed_password = driver_login.password
     # if not bcrypt.check_password_hash(hashed_password, data['password']):
     #   return "password you enter is not correct", 400
     # else:
@@ -56,7 +55,7 @@ def driverlogin():
     return encoded_jwt
 
 
-@app.route("/riderLogin", methods=["POST"])
+@app.route("/rider-login", methods=["POST"])
 def riderLogin():
     data = json.loads(request.get_data())
     if not data["username"] or not data["password"]:
@@ -69,7 +68,7 @@ def riderLogin():
     return encoded_jwt
 
 
-@app.route("/driverroute", methods=["GET"])
+@app.route("/driver-route", methods=["GET"])
 def driveroutes():
     if not request.headers.get("Authorization"):
         return "Please enter the required fields", 401
