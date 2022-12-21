@@ -55,9 +55,10 @@ if __name__ == "__main__":
 
 # helper functions
 def return_jwt_to_user(data, role):
-    driver_login = role.query.filter_by(username=data["username"]).first()
+    username_from_frontend = data["username"]
+    driver_login = role.query.filter_by(username=username_from_frontend).first()
     encoded_jwt = jwt.encode(
-        {"username": data["username"]}, JWT_SECRET_KEY, algorithm="HS256"
+        {"username": username_from_frontend}, JWT_SECRET_KEY, algorithm="HS256"
     )
     return encoded_jwt
 
@@ -65,11 +66,12 @@ def return_jwt_to_user(data, role):
 def handle_driver_authentication(auth_token):
     try:
         driver_entered_data = jwt.decode(auth_token, JWT_SECRET_KEY, algorithms="HS256")
+        driver_username = driver_entered_data["username"]
         current_logged_in_user = Drivers.query.filter_by(
-            username=driver_entered_data["username"]
+            username=driver_username
         ).first()
 
-        return "some route info", 200
+        return "some route info to display when driver logs in", 200
 
     except:
         return "Token is invalid", 401
