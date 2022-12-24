@@ -12,7 +12,7 @@
 ## Creating the database
 
 1. Run `psql` in your terminal
-2. Create a database called _smartbusbackend_ by running `CREATE DATABASE smartbus_backend`
+2. Create a database called _smartbus_backend_ by running `CREATE DATABASE smartbus_backend`
 3. Create a username and secure password `CREATE USER <username> WITH PASSWORD <password>`
 4. Grant user admin privileges `GRANT ALL PRIVILEGES ON DATABASE smartbus_backend TO <username>`
 
