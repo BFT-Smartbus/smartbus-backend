@@ -25,4 +25,4 @@ Note the username and password as you will need them for setting up environmet v
 
 ## Generating the tables
 
-In the root folder, run `flask run` to create heartbeat tables
+In the root folder, run `flask run` to create the drivers and riders tables
