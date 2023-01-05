@@ -2,7 +2,8 @@ from config import db
 import enum
 from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy
-# from sqlalchemy import Enum
+from dataclasses import dataclass
+
 STRING_SIZE = 2048
 
 class Status(enum.Enum):
@@ -10,9 +11,10 @@ class Status(enum.Enum):
     PICKED_UP = "picked_up"
     DROPPED_OFF = "dropped_off"
 
+@dataclass
 class Routes(db.Model):
-    routeId = db.Column(db.String, primary_key=True)
-    timestamp = db.Column(db.Integer,nullable=False)
-    duration = db.Column(db.Integer,nullable=False)
-    status = db.Column(sqlalchemy.types.Enum(Status),nullable=False)
-    polyline = db.Column(db.String(STRING_SIZE),nullable=False)
+    routeId: str = db.Column(db.String, primary_key=True)
+    timestamp: int = db.Column(db.Integer,nullable=False)
+    duration: int = db.Column(db.Integer,nullable=False)
+    status: Status = db.Column(sqlalchemy.types.Enum(Status))
+    polyline: str = db.Column(db.String(STRING_SIZE),nullable=False)

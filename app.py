@@ -3,7 +3,7 @@ import jwt
 import config
 import os
 from dotenv import load_dotenv
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from config import db
 from models.Drivers import Drivers
 from models.Riders import Riders
@@ -49,6 +49,12 @@ def get_driver_routes():
 
     return handle_driver_authentication(auth_token)
 
+@app.route("/get-route-details/<string:routeId>", methods=["GET"])
+def get_route_details(routeId):
+    route = Routes.query.filter_by(routeId=routeId).first()
+    return jsonify(route)
+
+
 
 if __name__ == "__main__":
 
@@ -76,3 +82,5 @@ def handle_driver_authentication(auth_token):
 
     except:
         return "Token is invalid", 401
+
+
