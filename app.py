@@ -7,6 +7,7 @@ from flask import Flask, request
 from config import db
 from models.Drivers import Drivers
 from models.Riders import Riders
+from models.Routes import Routes
 
 # os, dotenv, and load_dotenv() are what we need to use .env to hide confidential code
 load_dotenv()
