@@ -10,9 +10,8 @@ client = Client(account_sid, auth_token)
 
 message = client.messages \
                 .create(
-                     body="Join Earth's mightiest heroes. Like Kevin Bacon.",
+                     body="ANIME IS AWESOME!",
                      from_= os.environ['FROM_NUMBER'],
                      to= os.environ['TO_NUMBER']
                  )
 
-print(message.sid)
