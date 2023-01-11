@@ -3,10 +3,11 @@ import jwt
 import config
 import os
 from dotenv import load_dotenv
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from config import db
 from models.Drivers import Drivers
 from models.Riders import Riders
+from models.Routes import Routes
 
 # os, dotenv, and load_dotenv() are what we need to use .env to hide confidential code
 load_dotenv()
@@ -47,6 +48,18 @@ def get_driver_routes():
     auth_token = request.headers.get("Authorization")
 
     return handle_driver_authentication(auth_token)
+
+
+@app.route("/route-details/<string:routeId>", methods=["GET"])
+def get_route_details(routeId):
+    route = get_route_details_by_route_id(routeId)
+    if route:
+        return jsonify(route)
+    return f"no route details for route id: {routeId} ", 400
+
+
+def get_route_details_by_route_id(routeId):
+    return Routes.query.filter_by(routeId=routeId).one_or_none()
 
 
 if __name__ == "__main__":
