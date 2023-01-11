@@ -2,9 +2,8 @@ from dotenv import load_dotenv
 from twilio.rest import Client
 load_dotenv()
 import os
-# Find your Account SID and Auth Token at twilio.com/console
-# and set the environment variables. See http://twil.io/secure
-def SMS():
+
+def SEND_SMS():
   account_sid = os.environ['TWILIO_ACCOUNT_SID']
   auth_token = os.environ['TWILIO_AUTH_TOKEN']
   client = Client(account_sid, auth_token)
@@ -15,4 +14,4 @@ def SMS():
                      to= os.environ['TO_NUMBER']
                  )
 
-SMS()
+SEND_SMS()
