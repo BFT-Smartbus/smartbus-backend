@@ -7,7 +7,9 @@ importlib-metadata==5.2.0
 itsdangerous==2.1.2
 Jinja2==3.1.2
 MarkupSafe==2.1.1
+psycopg2-binary==2.9.5
 PyJWT==2.6.0
+python-dotenv==0.21.0
 SQLAlchemy==1.4.45
 Werkzeug==2.2.2
 zipp==3.11.0
